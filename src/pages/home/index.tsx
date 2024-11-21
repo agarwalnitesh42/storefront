@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Header from "../../components/Header";
 import TopDeals from "../../components/TopDeals";
 import SearchComponent from "../../components/SearchBar";
 import PostRequirementButton from "../../components/PostRequirement";
