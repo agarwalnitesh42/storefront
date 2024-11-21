@@ -1,0 +1,8 @@
+.layoutContainer {
+  display: flex;
+  flex-direction: 'row';
+}
+
+.w-100 {
+  width: 100%;
+}
