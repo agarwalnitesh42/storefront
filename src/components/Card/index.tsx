@@ -10,6 +10,7 @@ export interface CardProps {
   contactNumber: string;
   brokerInfo: BrokerMiniCardProps;
   onShareClick?: () => void;
+  onBrokerClick?: () => void;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -21,6 +22,7 @@ const Card: React.FC<CardProps> = ({
   contactNumber,
   brokerInfo,
   onShareClick,
+  onBrokerClick,
 }) => {
   return (
     <div className="flex-1">
@@ -71,7 +73,7 @@ const Card: React.FC<CardProps> = ({
       </div>
   
       {/* Broker Mini Contact Card */}
-      <BrokerMiniCard {...brokerInfo} />
+      <BrokerMiniCard {...brokerInfo} onBrokerClick={onBrokerClick}/>
     </div>
   );
 };

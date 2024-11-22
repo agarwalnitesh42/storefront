@@ -6,6 +6,7 @@ export interface BrokerMiniCardProps {
   location: string;
   contactNumber: string;
   onContactClick?: () => void;
+  onBrokerClick?: () => void;
 }
 
 const BrokerMiniCard: React.FC<BrokerMiniCardProps> = ({
@@ -14,9 +15,10 @@ const BrokerMiniCard: React.FC<BrokerMiniCardProps> = ({
   location,
   contactNumber,
   onContactClick,
+  onBrokerClick,
 }) => {
   return (
-    <div className="flex items-center justify-between bg-gray-100 shadow-md rounded-lg p-2">
+    <div className="flex items-center justify-between bg-gray-100 shadow-md rounded-lg p-2" onClick={onBrokerClick}>
       {/* Left: Broker Info */}
       <div className="flex items-center gap-3">
         {/* Broker Image */}

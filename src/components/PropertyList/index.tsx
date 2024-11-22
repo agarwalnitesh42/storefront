@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import usePropertiesStore from "../../store/propertiesStore";
 import PropertyCard from "../Card";
 import Placeholder from "../Placeholder";
+import { useNavigate } from "react-router-dom";
 
 const PropertyList: React.FC = () => {
   const {
@@ -12,6 +13,8 @@ const PropertyList: React.FC = () => {
     hasMore,
     loadMoreProperties,
   } = usePropertiesStore();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProperties();
@@ -42,6 +45,7 @@ const PropertyList: React.FC = () => {
             contactNumber={property.contactNumber}
             description="This property is available for immediate purchase."
             brokerInfo={property.brokerInfo}
+            onBrokerClick={() => navigate('/brokerProfile')}
           />
         ))}
     </div>
