@@ -2,12 +2,12 @@ import { create } from "zustand";
 import { Property } from "../types";
 
 export interface PropertiesStore {
-  properties: Property[];
-  isLoading: boolean;
-  error: string | null;
-  hasMore: boolean;
-  fetchProperties: () => Promise<void>;
-  loadMoreProperties: () => Promise<void>;
+    properties: Property[];
+    isLoading: boolean;
+    error: string | null;
+    hasMore: boolean;
+    fetchProperties: (query?: string) => Promise<void>;
+    loadMoreProperties: () => Promise<void>;
 }
 
 const mockProperties = [
@@ -127,28 +127,45 @@ const mockProperties = [
     },
 ];
 
+const PAGE_SIZE = 5; // Pagination size
+
 const usePropertiesStore = create<PropertiesStore>((set, get) => ({
-  properties: [],
-  isLoading: false,
-  error: null,
-  hasMore: true,
-  fetchProperties: async () => {
-    set({ isLoading: true, error: null });
-    try {
-      const data = mockProperties.slice(0, 5); // Simulate API
-      set({ properties: data, isLoading: false, hasMore: mockProperties.length > data.length });
-    } catch (err: any) {
-      set({ error: err.message, isLoading: false });
-    }
-  },
-  loadMoreProperties: async () => {
-    try {
-      const data = mockProperties.slice(get().properties.length, get().properties.length + 5);
-      set({ properties: [...get().properties, ...data], hasMore: mockProperties.length > data.length });
-    } catch (err: any) {
-      set({ error: err.message });
-    }
-  },
+    properties: [],
+    isLoading: false,
+    error: null,
+    hasMore: true,
+
+    fetchProperties: async (query?: string) => {
+        set({ isLoading: true, error: null });
+        try {
+            const data = mockProperties.slice(0, PAGE_SIZE); // Simulate API for initial fetch
+            set({
+                properties: data,
+                isLoading: false,
+                hasMore: mockProperties.length > data.length,
+            });
+        } catch (err: any) {
+            set({ error: err.message, isLoading: false });
+        }
+    },
+
+    loadMoreProperties: async () => {
+        const { properties } = get();
+        set({ isLoading: true });
+        try {
+            const data = mockProperties.slice(
+                properties.length,
+                properties.length + PAGE_SIZE
+            ); // Simulate API for pagination
+            set({
+                properties: [...properties, ...data],
+                isLoading: false,
+                hasMore: mockProperties.length > properties.length + PAGE_SIZE,
+            });
+        } catch (err: any) {
+            set({ error: err.message, isLoading: false });
+        }
+    },
 }));
 
 export default usePropertiesStore;

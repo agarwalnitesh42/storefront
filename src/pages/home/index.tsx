@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import TopDeals from "../../components/TopDeals";
 import SearchComponent from "../../components/SearchBar";
 import PostRequirementButton from "../../components/PostRequirement";
@@ -12,6 +14,7 @@ const HomePage: React.FC = () => {
     useLocationStore();
   const { topDeals, isLoading: isLoadingTopDeals, fetchTopDeals } =
     useTopDealsStore();
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const HomePage: React.FC = () => {
     <div className="bg-gray-50 min-h-screen">
       <main className="p-6 space-y-6">
         {/* Search Component */}
-        <SearchComponent onSearchClick={() => console.log('')}/>
+        <SearchComponent onSearchClick={() => navigate("/search")}/>
 
         {/* Top Deals */}
         <section>

@@ -7,15 +7,19 @@ const ReportIcon = () => <span>📊</span>;
 const MapIcon = () => <span>🗺️</span>;
 
 // Sidebar Item Interface
-interface SidebarItem {
+export interface SidebarItem {
   label: string;
   icon: React.ReactNode;
   isActive: boolean;
   onClick: () => void;
 }
 
+export interface Props {
+  onMenuClick: (menuItem: string) => void;
+}
+
 // SideBar Component
-const SideBar: React.FC = () => {
+const SideBar: React.FC<Props> = ({onMenuClick}) => {
   const [activeItem, setActiveItem] = React.useState<string>('Listing');
 
   const sidebarItems: SidebarItem[] = [
@@ -23,24 +27,33 @@ const SideBar: React.FC = () => {
       label: 'Listing',
       icon: <ListingIcon />,
       isActive: activeItem === 'Listing',
-      onClick: () => setActiveItem('Listing'),
+      onClick: () => { 
+        setActiveItem('Listing');
+        onMenuClick('/');
+      },
     },
     {
       label: 'Report',
       icon: <ReportIcon />,
       isActive: activeItem === 'Report',
-      onClick: () => setActiveItem('Report'),
+      onClick: () => { 
+        setActiveItem('Report');
+        onMenuClick('report');
+      },
     },
     {
       label: 'Map',
       icon: <MapIcon />,
       isActive: activeItem === 'Map',
-      onClick: () => setActiveItem('Map'),
+      onClick: () => { 
+        setActiveItem('Map');
+        onMenuClick('map');
+      },
     },
   ];
 
   return (
-    <div className="h-full w-20 bg-gray-100 flex flex-col items-center py-4 shadow-md">
+    <div className="h-full w-20 bg-gray flex flex-col items-center py-4 shadow-md">
       {sidebarItems.map((item) => (
         <div
           key={item.label}

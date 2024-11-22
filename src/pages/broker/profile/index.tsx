@@ -3,12 +3,16 @@ import BrokerProfileCard from "../../../components/BrokerProfileCard";
 import PropertyCard from "../../../components/Card"; // Updated import for PropertyCard
 import GridLayout from "../../../components/GridLayout";
 import Placeholder from "../../../components/Placeholder";
-import useBrokerStore, { Property } from "../../../store/brokerStore";
+import useBrokerStore from "../../../store/brokerStore";
+import usePropertiesStore from "../../../store/propertiesStore";
+import { Property } from "../../../types";
 
 const BrokerProfilePage: React.FC = () => {
-  const { properties, isLoading, error, fetchProperties } = useBrokerStore();
+  const { brokerDetail, fetchBrokerDetail } = useBrokerStore();
+  const { properties, isLoading, error, fetchProperties } = usePropertiesStore();
 
   useEffect(() => {
+    fetchBrokerDetail();
     fetchProperties();
   }, [fetchProperties]);
 
